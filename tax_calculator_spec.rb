@@ -29,6 +29,12 @@ RSpec.describe "Tax Calculator" do
     calculator = TaxCalculator.new("./test_inputs/input2.csv")
   end
 
+  it "should round to the nearest 0.05" do
+    calculator = TaxCalculator.new("./test_inputs/input1.csv")
+    rounded_value = calculator.round_tax(1.235, 0.05)
+    expect(rounded_value).to eq(1.25)
+  end
+
   it "should print statement" do
     calculator1 = TaxCalculator.new("./test_inputs/input1.csv")
     puts "Statement Input 1:\n\n"
