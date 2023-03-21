@@ -1,0 +1,5 @@
+quantity,name,unit_price,imported
+1,bottle of perfume,27.99,true
+1,bottle of perfume,18.99,false
+1,packet of headache pills,9.75,false
+3,boxes of chocolates,11.25,true
