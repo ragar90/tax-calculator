@@ -1,6 +1,10 @@
 require './tax_calculator'
-
-items_file_name = ARGV[0]
-
-calculator = TaxCalculator.new(items_file_name)
-calculator.print_statement
+require './csv_parser'
+include CSVParser
+begin
+  filename = ARGV[0]  
+  items = parse_file(file_name)
+  calculator = TaxCalculator.new(items)
+  calculator.print_statement
+rescue 
+end
