@@ -1,6 +1,8 @@
 require 'csv'
 require './billing_item'
+require './constants'
 class TaxCalculator
+	include Constants
 	attr_accessor :file_name
 	attr_accessor :items
 	def initialize(items_file_name)
@@ -22,8 +24,8 @@ class TaxCalculator
 	def print_statement
 		items.each do |item|
 			item_total_bt = item.quantity * item.unit_price
-			item_imported = round_tax((item.imported ? item_total_bt * 0.05 : 0), 0.05)
-			item_tax = round_tax((!item.excempt_from_tax ? item_total_bt * 0.10 : 0), 0.05)
+			item_imported = round_tax((item.imported ? item_total_bt * IMPORTED_TAX_RATE : 0), ROUND_PRECISION)
+			item_tax = round_tax((!item.excempt_from_tax ? item_total_bt * SALE_TAX_RATE : 0), ROUND_PRECISION)
 			item_total = item_total_bt + item_tax + item_imported
 		  puts "#{item.quantity} #{item.imported ? "imported " : ""}#{item.name}: #{formated_amount(item_total)}"
 		end
@@ -42,7 +44,7 @@ class TaxCalculator
 	def total_sale_tax
 		@items
 		.select{|item| !item.excempt_from_tax}
-		.map{ |item| item.unit_price * item.quantity * 0.10 }
+		.map{ |item| item.unit_price * item.quantity * SALE_TAX_RATE }
 		.sum()
 	end
 
@@ -54,7 +56,7 @@ class TaxCalculator
 	end
 
 	def round_tax(tax, precision)
-		(tax * 1/precision).ceil. / (1/precision)
+		(tax * 1/precision).ceil / (1/precision)
 	end
 
 	def formated_amount(value)
