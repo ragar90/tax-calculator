@@ -14,7 +14,7 @@ class TaxCalculator
 		items.each do |item|
 			item_tax = round_tax(item.total, ROUND_PRECISION)
 			item_total = item.total
-		  puts "#{item.quantity} #{item.imported ? "imported " : ""}#{item.name}: #{formated_amount(item_total)}"
+		  puts "#{item.quantity} #{item.imported? ? "imported " : ""}#{item.name}: #{formated_amount(item_total)}"
 		end
 		total_tax = round_tax((total_sale_tax + imported_tax), 0.05)
 		total = total_before_tax + total_tax
